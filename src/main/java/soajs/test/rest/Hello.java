@@ -23,22 +23,30 @@ import org.json.JSONObject;
 @Path("/hello")
 public class Hello {
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTest(
+            @QueryParam("username") String username,
+            @QueryParam("lastname") String lastname) {
+        JSONObject response = new JSONObject();
+        
+        response.put("message", "Hello, I am a JAVA service, you are ["+username+"] and your last name is : ["+lastname+"]");
+        
+        return Response.status(200).entity(response.toString()).build();
+    }
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response postTest(String data,
             @Context HttpHeaders headers,
             @Context HttpServletRequest httpServletRequest,
             @Context HttpServletResponse httpServletResponse
     ) {
         JSONObject soajs = new JSONObject(headers.getRequestHeader("soajs").get(0));
-        return Response.status(201).entity(soajs.toString()).build();
+        return Response.status(200).entity(soajs.toString()).build();
     }
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getTest(@QueryParam("queryParam1") String queryParam1) {
-        return "get : " + queryParam1;
-    }
 
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
