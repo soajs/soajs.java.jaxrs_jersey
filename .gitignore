@@ -1,2 +1,4 @@
 /target/
 /src/test/java/
+/build/
+/dist/
