@@ -17,6 +17,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.json.JSONObject;
 
+import soajs.filters.SoajsRequestUtilities;
+
 /**
  *
  * @author Etienne
@@ -49,6 +51,10 @@ public class Hello {
             System.out.println("Post service reached: trying to fetch request header at SOAJS ...");
             System.out.println("Soajs request header length = ["+headers.getRequestHeader("soajs").size()+"]");
             soajs = new JSONObject(headers.getRequestHeader("soajs").get(0));
+            
+            String host = SoajsRequestUtilities.getHost(soajs);
+            soajs.put("controller", host);
+            
         }catch(Exception e){
             e.printStackTrace();
         }
