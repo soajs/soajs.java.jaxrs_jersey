@@ -1,5 +1,6 @@
 package soajs.test.rest;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -15,6 +16,8 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.json.JSONObject;
+
+import soajs.filters.SoajsRequestUtilities;
 
 /**
  *
@@ -43,7 +46,18 @@ public class Hello {
             @Context HttpServletRequest httpServletRequest,
             @Context HttpServletResponse httpServletResponse
     ) {
-        JSONObject soajs = new JSONObject(headers.getRequestHeader("soajs").get(0));
+        JSONObject soajs = new JSONObject();
+        try{
+            System.out.println("Post service reached: trying to fetch request header at SOAJS ...");
+            System.out.println("Soajs request header length = ["+headers.getRequestHeader("soajs").size()+"]");
+            soajs = new JSONObject(headers.getRequestHeader("soajs").get(0));
+            
+            String host = SoajsRequestUtilities.getHost(soajs);
+            soajs.put("controller", host);
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         return Response.status(200).entity(soajs.toString()).build();
     }
 
