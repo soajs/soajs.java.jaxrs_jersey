@@ -55,7 +55,6 @@ public class Hello {
             String host = SoajsRequestUtilities.getHost(soajs);
             soajs.put("controller", host);
 
-            soajs.put("databases", SoajsRegistry.getDatabases());
         }catch(Exception e){
             e.printStackTrace();
         }
