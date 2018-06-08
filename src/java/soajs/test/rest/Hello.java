@@ -16,6 +16,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.json.JSONObject;
+import soajs.filters.SoajsRegistry;
 
 import soajs.filters.SoajsRequestUtilities;
 
@@ -55,6 +56,7 @@ public class Hello {
             String host = SoajsRequestUtilities.getHost(soajs);
             soajs.put("controller", host);
 
+            soajs.put("databases", SoajsRegistry.getDatabases());
         }catch(Exception e){
             e.printStackTrace();
         }
